@@ -135,5 +135,5 @@ export EDITOR=vim
 export VISUAL=vim
 
 if [[ $- == *i* ]] && [ -z "$TMUX" ]; then
-#   exec tmux new-session -A -s main
+  exec tmux new-session -A -s main
 fi
