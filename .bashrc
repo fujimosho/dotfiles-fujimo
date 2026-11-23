@@ -134,6 +134,26 @@ PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND ; "}'printf "\e]9;9;%s\e\\" "$
 export EDITOR=vim
 export VISUAL=vim
 
+export PULSE_SERVER=/mnt/wslg/PulseServer
+export PATH=/usr/local/go/bin:$PATH
+. "$HOME/.cargo/env"
+
+# pnpm
+export PNPM_HOME="/home/fujimotoshoji/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
+
+# fnm (Node version manager)
+export PATH="$HOME/.local/share/fnm:$PATH"
+eval "$(fnm env --use-on-cd)"
+
+# elan (Lean version manager)
+. "$HOME/.elan/env"
+
+# tmux: ターミナル(tty)ごとに別セッションへ入る。必ず末尾に置く(exec で以降が読まれないため)
 if [[ $- == *i* ]] && [ -z "$TMUX" ]; then
-  exec tmux new-session -A -s main
+  exec tmux new-session -A -s "$(tty | sed 's|^/dev/||; s|/|-|g')"
 fi
